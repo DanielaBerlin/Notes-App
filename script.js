@@ -45,7 +45,7 @@ function showNotes() {
                   <div class="note-cta">
                     <p class="note-counter">Note ${index + 1}</p>
                     <div class="note-cta-btn">
-                      <button id="${index}" class="note-btn">
+                      <button id="${index}" onclick="deleteNote(this.id)" class="note-btn">
                         <i class="fas fa-trash"></i> Delete
                       </button>
                       <button id="${index}" class="note-btn edit-btn">
@@ -59,14 +59,32 @@ function showNotes() {
                 </div>
         `;
   });
-    let noteElm = document.getElementById("notes")
-    // noteElm.innerHTML = html;
-    
-    if (notesObj.length != 0) {
-        noteElm.innerHTML = html;
-    } else {
-        noteElm.innerHTML = "No notes added, please add a note";
-    }
+  let noteElm = document.getElementById('notes');
+  // noteElm.innerHTML = html;
+
+  if (notesObj.length != 0) {
+    noteElm.innerHTML = html;
+  } else {
+    noteElm.innerHTML = 'No notes added, please add a note';
+  }
 }
+
+// Delete a single note
+function deleteNote(index) {
+  let confirmDel = confirm('Do you really want to delete this note?');
+  if (confirmDel) {
+    getNotes();
+    notesObj.splice(index, 1);
+    localStorage.setItem('notes', JSON.stringify(notesObj));
+    showNotes();
+  }
+}
+
+// Delete all notes
+
+clear.addEventListener('click', () => {
+  localStorage.clear();
+  showNotes();
+});
 
 showNotes();
