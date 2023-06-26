@@ -48,7 +48,7 @@ function showNotes() {
                       <button id="${index}" onclick="deleteNote(this.id)" class="note-btn">
                         <i class="fas fa-trash"></i> Delete
                       </button>
-                      <button id="${index}" class="note-btn edit-btn">
+                      <button id="${index}" onclick="editNote(this.id)" class="note-btn edit-btn">
                         <i class="fas fa-edit"></i> Edit
                       </button>
                     </div>
@@ -86,5 +86,21 @@ clear.addEventListener('click', () => {
   localStorage.clear();
   showNotes();
 });
+
+// Edit note
+
+function editNote(index) {
+  if (noteTitle.value !== '' || noteText.value !== '') {
+    return alert('Please clear the form before editing ');
+  }
+  getNotes();
+
+  noteTitle.value = notesObj[index].title;
+  noteText.value = notesObj[index].text;
+
+  notesObj.splice(index, 1);
+  localStorage.setItem('notes', JSON.stringify(notesObj));
+  showNotes();
+}
 
 showNotes();
